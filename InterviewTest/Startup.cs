@@ -26,15 +26,13 @@ namespace InterviewTest
         {
             services.AddCors(options =>
             {
-                options.AddPolicy("default",
-                builder =>
-                {
-                    builder.AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowAnyOrigin()
-                        .AllowCredentials();
-                });
+                options.AddPolicy("AllowOrigin",
+                    builder => builder.WithOrigins("http://localhost:4200")
+                                      .AllowAnyMethod()
+                                      .AllowAnyHeader());
+
             });
+            services.AddControllersWithViews();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -46,9 +44,15 @@ namespace InterviewTest
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseCors("default");
+            app.UseCors("AllowOrigin");
+            app.UseRouting();
 
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

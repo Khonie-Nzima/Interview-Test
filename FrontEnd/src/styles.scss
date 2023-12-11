@@ -1,1 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.heading{
+  text-align: center;
+  color: blue;
+
+}
+.table-header-primary {
+  background-color: rgba(255, 255, 255, 0.76) !important;
+  color: white !important;
+  padding: 8px;
+}
+

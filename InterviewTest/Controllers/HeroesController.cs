@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using InterviewTest.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,8 +44,18 @@ namespace InterviewTest.Controllers
 
         // POST: api/Heroes
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post(actionFunc obj)
         {
+
+           var hero = this.heroes.Where(x => x.name == obj.heroName).FirstOrDefault();  
+            
+            if (obj.action.ToLower() == "evolve")
+            {
+                // Call the Evolve method if the action is "evolve"
+                hero.Evolve();
+                return Ok(hero);
+            }
+            return BadRequest("Action is not an evovle");
         }
 
         // PUT: api/Heroes/5
